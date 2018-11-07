@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# # Temprature Forecast Program (In Fewlines of Code)
+
+#  This is program used re and urllib.request library to show the Temprature of Country on the basic of Capital of the country Entered. This Program is not too tough to understand and it is very easy to calculate the temprature. You just need to enter your city name and it is done.
+
+# In[1]:
+
+
+# importing basic library used in the program
+import re
+import time
+import urllib.request 
+
+
+# ### https://www.weather-forecast.com/locations/Paris/forecasts/latest
+# #### This is the site used for the required information
+# 
+
+# In[2]:
+
+
+# taking user input and saving it in a variale, 
+
+print("Input Me with Capital of the Country and I will provide you with Temprature of the country\n")
+time.sleep(2)
+usr_input =(input("What is your input : "))
+
+
+# Concatenating url with the user input
+url = 'https://www.weather-forecast.com/locations/' + usr_input + '/forecasts/latest'
+
+
+# In[3]:
+
+
+# Reading data for the url Created above
+data = urllib.request.urlopen(url).read()
+
+
+# In[4]:
+
+
+# decoding data to utf-8 format
+data_decode = data.decode('utf-8')
+
+
+# In[8]:
+
+
+#finding the string " phrase"> " in the source code of above url and the saving the output in a varable  :find_data:
+find_data= re.search('phrase">', data_decode)
+
+# Again searching for string '.</span></p>' in the source code
+new_data  = re.search('.</span></p>',data_decode)
+
+
+# saving starting points and ending points of the of the above collected data in some variable 
+s = new_data.start()
+e = new_data.end()
+#print(s, e)
+
+start = find_data.end()
+end = find_data.end() +100
+#print(start, end)
+
+
+# In[9]:
+
+
+print('\n\nTemprature in ' + usr_input  + ' Currently is : '  + data_decode[start: s] )
+
+
+# In[7]:
+
+
+time.sleep(10)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
